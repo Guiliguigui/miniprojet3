@@ -48,7 +48,7 @@ def create_SIV(cursor):
         variante                    TEXT    NOT NULL,
         version                     TEXT    NOT NULL)''')
 
-def update_vehicle(row):
+def update_vehicle(row,cursor):
     """
     Update a specific row in the SIV table with a corresponding row from the csv file.
 
@@ -81,7 +81,7 @@ def update_vehicle(row):
     version                     = ?
     WHERE immatriculation=?''', values)
 
-def insert_vehicle(row):
+def insert_vehicle(row,cursor):
     """
     Insert a specific row in the SIV table from the csv file.
 
@@ -135,10 +135,10 @@ if __name__ == "__main__":
         cursor.execute(' SELECT COUNT(immatriculation) FROM SIV WHERE immatriculation=? ', values)
         if cursor.fetchone()[0]==1 :
             updated+=1
-            update_vehicle(row)
+            update_vehicle(row,cursor)
         else:
             inserted+=1
-            insert_vehicle(row)
+            insert_vehicle(row,cursor)
             
 
     logging.info('%d vehicle inserted, %d vehicle updated.', inserted, updated)
